@@ -10,8 +10,9 @@ import LandingFooter from "@/components/landing/footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Build Beautiful Forms | TypeForm Clone",
-  description: "The best free alternative to Typeform. Create conversational forms, surveys, and quizzes in minutes.",
+  title: "Form Builder with Logic and Analytics | FormFlow",
+  description:
+    "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
 };
 
 export default function LandingPage() {
