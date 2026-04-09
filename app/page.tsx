@@ -10,9 +10,21 @@ import LandingFooter from "@/components/landing/footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Form Builder with Logic and Analytics | FormFlow",
+  title: {
+    absolute: "Form Builder with Logic and Analytics | FormFlow",
+  },
   description:
     "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  openGraph: {
+    title: "Form Builder with Logic and Analytics | FormFlow",
+    description:
+      "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  },
+  twitter: {
+    title: "Form Builder with Logic and Analytics | FormFlow",
+    description:
+      "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  },
 };
 
 export default function LandingPage() {

@@ -20,24 +20,24 @@ export default function CTALanding() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/signup">
-              <Button
-                size="lg"
-                className="h-14 px-8 rounded-full text-lg bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 transition-all"
-              >
+            <Button
+              size="lg"
+              asChild
+              className="h-14 px-8 rounded-full text-lg bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 transition-all"
+            >
+              <Link href="/signup">
                 Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/login">
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-14 px-8 rounded-full text-lg border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-black dark:hover:text-white transition-all"
-              >
-                Contact Sales
-              </Button>
-            </Link>
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              asChild
+              className="h-14 px-8 rounded-full text-lg border-zinc-200 dark:border-zinc-800 text-black dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-black dark:hover:text-white transition-all"
+            >
+              <Link href="/login">Log in</Link>
+            </Button>
           </div>
 
           <p className="mt-8 text-sm text-zinc-500 dark:text-zinc-500">
