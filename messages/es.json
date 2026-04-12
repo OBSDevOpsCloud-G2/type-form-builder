@@ -1,0 +1,32 @@
+{
+  "HomePage": {
+    "title": "Crea formularios hermosos",
+    "description": "Crea hermosos formularios conversacionales, encuestas, cuestionarios y más.",
+    "getStarted": "Empezar",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "Auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "description": "Inicia sesión en tu cuenta",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "button": "Iniciar sesión"
+    },
+    "signup": {
+      "title": "Crear una cuenta",
+      "description": "Introduce tus datos para empezar",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "button": "Crear cuenta"
+    }
+  },
+  "Common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  }
+}
