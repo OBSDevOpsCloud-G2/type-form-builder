@@ -10,15 +10,23 @@ import LandingFooter from "@/components/landing/footer";
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'HomePage' });
-
-  return {
-    title: t('title'),
-    description: t('description')
-  };
-}
+export const metadata: Metadata = {
+  title: {
+    absolute: "Form Builder with Logic and Analytics | FormFlow",
+  },
+  description:
+    "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  openGraph: {
+    title: "Form Builder with Logic and Analytics | FormFlow",
+    description:
+      "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  },
+  twitter: {
+    title: "Form Builder with Logic and Analytics | FormFlow",
+    description:
+      "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
+  },
+};
 
 export default function LandingPage() {
   return (
