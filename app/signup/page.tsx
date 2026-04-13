@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Link, useRouter } from "@/i18n/routing";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm, ControllerRenderProps } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
 
 import {
   Form,
@@ -17,19 +17,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signIn } from "@/server/users";
+import { signUp } from "@/server/users";
 import { toast } from "sonner";
 
-const formSchema = z.object({
-  email: z.string().email("Enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+const signupSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.email("Invalid email address"),
+  confirmPassword: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type SignupValues = z.infer<typeof signupSchema>;
 
 function TextField(props: {
-  form: ReturnType<typeof useForm<FormValues>>;
-  name: keyof FormValues;
+  form: ReturnType<typeof useForm<SignupValues>>;
+  name: keyof SignupValues;
   label: string;
   type?: string;
   placeholder?: string;
@@ -42,7 +44,7 @@ function TextField(props: {
       render={({
         field,
       }: {
-        field: ControllerRenderProps<FormValues, typeof name>;
+        field: ControllerRenderProps<SignupValues, typeof name>;
       }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
@@ -62,29 +64,36 @@ function TextField(props: {
   );
 }
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
-  const t = useTranslations('Auth.login');
-  const commonT = useTranslations('Common');
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { email: "", password: "" },
-    mode: "onSubmit",
+  const form = useForm<SignupValues>({
+    resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: SignupValues) => {
+    const { email, name, password } = values;
+    // check if passwords match
+    // if (values.password !== values.confirmPassword) {
+    //   form.setError("confirmPassword", {
+    //     type: "manual",
+    //     message: "Passwords do not match",
+    //   });
+    //   return;
+    // }
+
     try {
-      const res = await signIn(values.email, values.password);
+      const res = await signUp(name, email, password);
       if (res.user) {
         router.push("/dashboard");
       }
     } catch (error) {
       toast.error(
-        "Failed to sign in. Please check your credentials." +
+        "Failed to sign up. Please try again." +
         (error instanceof Error ? ` ${error.message}` : ""),
       );
     }
+
+    // router.push("/dashboard");
   };
 
   const isLoading = form.formState.isSubmitting;
@@ -99,43 +108,59 @@ export default function LoginPage() {
       >
         <div className="bg-card backdrop-blur-xl border border-border rounded-3xl p-8 shadow-2xl">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-2">{t('title')}</h2>
+            <h1 className="text-3xl font-bold mb-2">Get started</h1>
             <p className="text-muted-foreground">
-              {t('description')}
+              Create your FormFlow account
             </p>
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <TextField
                 form={form}
-                name="email"
-                label={t('email')}
-                type="email"
-                placeholder="you@example.com"
+                name="name"
+                label="Name"
+                type="text"
+                placeholder="Your name"
               />
               <TextField
                 form={form}
-                name="password"
-                label={t('password')}
-                type="password"
-                placeholder="••••••••"
+                name="email"
+                label="Email"
+                placeholder="you@example.com"
               />
+
+              <TextField
+                form={form}
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Create a password"
+              />
+
+              <TextField
+                form={form}
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                placeholder="Confirm your password"
+              />
+
               <Button
                 type="submit"
                 disabled={isLoading}
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 min-h-12"
               >
-                {isLoading ? commonT('loading') : t('button')}
+                {isLoading ? "Creating account..." : "Create account"}
               </Button>
             </form>
           </Form>
 
           <div className="mt-6 pt-6 border-t border-border text-center">
             <Link
-              href="/signup"
+              href="/login"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Don&apos;t have an account? Sign up
+              Already have an account? Sign in
             </Link>
           </div>
         </div>

@@ -2,10 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +25,7 @@ export const metadata: Metadata = {
   creator: "FormFlow Team",
   openGraph: {
     type: "website",
+    locale: "en_US",
     url: "/",
     title: "FormFlow - Build Smarter Forms",
     description: "Create conversational forms with conditional logic, share them in minutes, and track responses with real-time analytics.",
@@ -45,32 +42,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params
-}: {
+}: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
-    notFound();
-  }
-
-  // Providing all messages to the client
-  const messages = await getMessages();
-
+}>) {
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-          <Toaster />
-        </NextIntlClientProvider>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

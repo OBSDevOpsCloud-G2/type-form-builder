@@ -7,8 +7,7 @@ import TemplatesSection from "@/components/landing/templates";
 import CTALanding from "@/components/landing/cta";
 import LandingFooter from "@/components/landing/footer";
 
-import { useTranslations } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
