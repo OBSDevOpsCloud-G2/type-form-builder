@@ -3,13 +3,17 @@ import { DashboardContent } from "@/components/dashboard/dashboard-content";
 import { getForms } from "@/actions/form-actions";
 import { getWorkspaces } from "@/actions/workspace-actions";
 import { FormsSkeleton } from "@/components/skeletons/forms-skeleton";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 
-import { Metadata } from "next";
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'HomePage' }); // Reusing for title for now
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
+  return {
+    title: "Dashboard",
+  };
+}
 
 async function DashboardData({
   activeWorkspaceId,
@@ -76,4 +80,3 @@ function DashboardSkeleton() {
     </>
   );
 }
-
